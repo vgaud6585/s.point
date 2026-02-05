@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern eBook Reader</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        /* --- Header --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 60px;
+            background: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .menu-btn {
+            font-size: 24px;
+            cursor: pointer;
+            margin-right: 20px;
+        }
+
+        /* --- Sidebar --- */
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 2000;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidebar a {
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover { color: #f1f1f1; }
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            font-size: 36px;
+        }
+
+        /* --- Main Content --- */
+        .container {
+            margin-top: 80px;
+            padding: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            background: white;
+            min-height: 80vh;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            line-height: 1.6;
+        }
+
+        .book-title {
+            cursor: pointer;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            user-select: none; /* Text select na ho double tap par */
+        }
+
+        .description {
+            display: none; /* Default hidden */
+            background: #eef2f3;
+            padding: 15px;
+            border-left: 5px solid var(--accent-color);
+            margin: 15px 0;
+            font-style: italic;
+        }
+
+        .content-body {
+            margin-top: 20px;
+            font-size: 1.1rem;
+        }
+
+        /* --- Pagination --- */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            padding: 40px 0;
+        }
+
+        .pagination button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .pagination button:disabled {
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="toggleNav()">×</a>
+        <a href="#">Chapter 1</a>
+        <a href="#">Chapter 2</a>
+        <a href="#">Author Bio</a>
+        <a href="#">Settings</a>
+    </div>
+
+    <header>
+        <span class="menu-btn" onclick="toggleNav()">☰</span>
+        <h2>My Digital Library</h2>
+    </header>
+
+    <div class="container">
+        <h1 class="book-title" id="bookHeading">Chapter 1: The New Beginning</h1>
+        
+        <div class="description" id="bookDesc">
+            <strong>Description:</strong> Yeh chapter ek nayi shuruat ke bare mein hai jahan protagonist apni purani zindagi chhod kar naye safar par nikalta hai.
+        </div>
+
+        <div class="content-body" id="bookContent">
+            <p>Yahan aapka main content ayega. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </div>
+    </div>
+
+    <div class="pagination">
+        <button id="prevBtn">Previous</button>
+        <button id="nextBtn">Next Page</button>
+    </div>
+
+    <script>
+        // --- Sidebar Logic ---
+        let sidebarOpen = false;
+        function toggleNav() {
+            const sidebar = document.getElementById("mySidebar");
+            if (!sidebarOpen) {
+                sidebar.style.width = "250px";
+                sidebarOpen = true;
+            } else {
+                sidebar.style.width = "0";
+                sidebarOpen = false;
+            }
+        }
+
+        // --- Double Tap Logic ---
+        const heading = document.getElementById('bookHeading');
+        const desc = document.getElementById('bookDesc');
+        const content = document.getElementById('bookContent');
+
+        heading.addEventListener('dblclick', function() {
+            if (desc.style.display === "none" || desc.style.display === "") {
+                desc.style.display = "block";
+                content.style.display = "none";
+            } else {
+                desc.style.display = "none";
+                content.style.display = "block";
+            }
+        });
+
+        // --- Pagination Logic (Demo) ---
+        let currentPage = 1;
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            currentPage++;
+            alert("Aap Page " + currentPage + " par ja rahe hain!");
+            // Yahan aap content change karne ka logic add kar sakte hain
+        });
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if(currentPage > 1) {
+                currentPage--;
+                alert("Aap Page " + currentPage + " par wapas ja rahe hain!");
+            }
+        });
+    </script>
+</body>
+</html>

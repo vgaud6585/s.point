@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}homepage{% endblock title %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'web/css/web.css' %}" type="text/css" media="all" />
+{% endblock style %}
+{% block content %}
+{% include 'web/html/sidebar.html' %}
+{% include 'web/html/header.html' %}
+{% include 'web/html/main-content.html' %}
+{% include 'web/html/footer.html' %}
+
+   
+{% endblock content %}
+{% block script %}
+<script src="{% static 'web/js/web.js' %}" type="text/javascript" charset="utf-8"></script>
+{% endblock script %}

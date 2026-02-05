@@ -1,0 +1,63 @@
+/* Page Setup */
+body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #0f172a;
+    /* Dark Elegant Background */
+    margin: 0;
+    overflow: hidden;
+    font-family: "Arial", sans-serif;
+}
+
+/* Image Container */
+.stage {
+    width: 80%;
+    max-width: 600px;
+    height: 120px;
+    position: relative;
+    border-bottom: 2px dashed rgba(255, 255, 255, 0.1);
+    margin-bottom: 50px;
+}
+
+/* Moving Image Styling */
+#moving-img {
+    width: 100px;
+    position: absolute;
+    left: 0;
+    transition: all 0.8s cubic-bezier(0.42, 0, 0.58, 1);
+    filter: drop-shadow(0 0 10px #00d2ff);
+}
+
+/* Class to move image to right */
+.move-right {
+    left: calc(100% - 100px) !important;
+    transform: rotate(360deg) scale(1.1);
+}
+
+/* Box to Circle Styling */
+#shape {
+    width: 150px;
+    height: 150px;
+    background: linear-gradient(45deg, #00d2ff, #3a7bd5);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+
+    /* Smooth Transition for Shape */
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Circle State */
+#shape.circle {
+    border-radius: 50%;
+    background: linear-gradient(45deg, #f953c6, #b91d73);
+    box-shadow: 0 0 40px rgba(249, 83, 198, 0.4);
+}
