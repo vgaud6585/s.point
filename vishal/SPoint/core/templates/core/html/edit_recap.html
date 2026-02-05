@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Edit Entry - {{ entry.heading }}{% endblock title %}
+
+{% block style %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="{% static 'core/css/style.css' %}" type="text/css" media="all" />
+{% endblock style %}
+
+{% block content %}
+<div class="link-container" style="margin: 10px 5px;">
+    <a href="{% url 'study-list' %}" class="btn-study">
+        <i class="fas fa-arrow-left"></i> Back to List
+    </a>
+</div>
+
+<div class="dashboard-container">
+	<main class="content">
+		<header>
+            <h1><i class="fas fa-edit"></i> Edit Entry</h1>
+		</header>
+
+		<div class="form-card">
+			<form id="recapForm" method="POST">
+				{% csrf_token %}
+
+				<div class="input-group">
+					<label>Heading</label>
+                    <input type="text" name="heading" id="id_heading" required 
+                           value="{{ entry.heading }}" placeholder="Enter topic name...">
+				</div>
+
+				<div class="input-group">
+					<label>Description</label>
+                    <textarea name="description" id="id_description" required 
+                              placeholder="Detailed notes...">{{ entry.description }}</textarea>
+				</div>
+
+				<div class="input-group">
+					<label class="code-label"><i class="fas fa-code"></i> Code Snippet</label>
+                    <textarea name="code_snippet" id="id_code_snippet" class="code-area" 
+                              placeholder="// Update code here...">{{ entry.code_snippet }}</textarea>
+				</div>
+
+				<div class="actions">
+                    <button type="submit" class="btn-save btn-update">
+						<i class="fas fa-check-circle"></i> Update Changes
+					</button>
+				</div>
+			</form>
+		</div>
+	</main>
+</div>
+{% endblock content %}
+
+{% block script %}
+<script src="{% static 'core/js/script.js' %}" type="text/javascript" charset="utf-8"></script>
+{% endblock script %}

@@ -1,0 +1,153 @@
+/* 1. Global Reset: Taaki padding width se bahar na nikle */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* 2. Main Container: Margins aur Padding ko 5px rakha gaya hai */
+.content {
+    flex: 1;
+    padding: 5px;
+    margin: 5px;
+}
+
+header h1 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: #111827;
+}
+
+/* 3. Form Card: Safed box jo content hold karega */
+.form-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    width: 100%;
+}
+
+.input-group {
+    margin-bottom: 1.2rem;
+}
+
+.input-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #374151;
+}
+
+/* 4. Input & Textarea management: Taaki bahar na jayein */
+.input-group input,
+.input-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+.input-group input:focus,
+.input-group textarea:focus {
+    border-color: #4f46e5;
+    outline: none;
+    background-color: #f9fafb;
+}
+
+/* 5. Fixed Height & Scrolling for Textareas */
+#id_description {
+    height: 100px;    /* Description ki fix height */
+    resize: none;     /* Manual resize band */
+    overflow-y: auto; /* Scrollable content */
+}
+
+.code-area {
+    height: 250px;    /* Code snippet ki zyada height */
+    background: #1a1a1a;
+    color: #dcdcaa;
+    font-family: 'Consolas', 'Monaco', monospace;
+    resize: none;     /* Manual resize band */
+    overflow-y: auto; /* Scrollable content */
+    line-height: 1.5;
+}
+
+/* 6. Button Styling & Centering */
+.actions {
+    display: flex;
+    justify-content: center; /* Button ko beech mein karne ke liye */
+    margin-top: 10px;
+    padding-bottom: 10px;
+}
+
+.btn-save {
+    background: #4f46e5;
+    color: white;
+    padding: 12px 40px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(79, 70, 229, 0.3);
+}
+
+.btn-save:hover {
+    background: #4338ca;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(79, 70, 229, 0.4);
+}
+
+.btn-save i {
+    margin-right: 8px;
+}
+
+/* Container ko thodi space dene ke liye */
+.link-container {
+    margin: 20px 0;
+    display: inline-block;
+}
+
+/* Base Button Styling */
+.btn-study {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px; /* Icon aur text ke beech ki doori */
+    padding: 12px 24px;
+    background-color: #4f46e5; /* Modern Indigo color */
+    color: white !important; /* Text color white */
+    text-decoration: none; /* Underline hatane ke liye */
+    font-weight: 600;
+    font-size: 16px;
+    border-radius: 50px; /* Capsule shape */
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(79, 70, 229, 0.2);
+    border: 2px solid transparent;
+}
+
+/* Hover Effect: Jab mouse upar jaye */
+.btn-study:hover {
+    background-color: #4338ca;
+    transform: translateX(-5px); /* Halki si left movement (back feel dene ke liye) */
+    box-shadow: 0 6px 12px rgba(79, 70, 229, 0.3);
+}
+
+/* Active/Click Effect */
+.btn-study:active {
+    transform: scale(0.95);
+}
+
+/* Icon Animation */
+.btn-study i {
+    transition: transform 0.3s ease;
+}
+
+.btn-study:hover i {
+    transform: translateX(-3px); /* Arrow thoda aur peeche move hoga */
+}

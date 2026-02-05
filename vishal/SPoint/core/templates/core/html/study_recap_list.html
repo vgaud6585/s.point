@@ -1,6 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}homepage{% endblock title %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'core/css/study_recap.css' %}" type="text/css" media="all" />
+{% endblock style %}
+{% block content %}
 <div class="container">
     <header class="main-header">
-        <h1>Vishal gaud</h1>
+        
+        <a href="{% url 'homepage' %}" class="btn-add">Vishal Gaud</a>
         <a href="{% url 'dashboard' %}" class="btn-add">+ New Entry</a>
     </header>
 
@@ -8,7 +16,7 @@
         {% for entry in entries %}
         <div class="recap-card">
             <div class="card-top">
-                <span class="badge">Topic</span>
+                <span class="badge">Topic {{ entry.id }}</span>
                 <span class="date">{{ entry.created_at|date:"d M, Y" }}</span>
             </div>
 
@@ -25,6 +33,17 @@
             </div>
             {% endif %}
         </div>
+        <div class="recap-card">
+    <div class="card-actions">
+        <a href="{% url 'edit_recap' entry.pk %}" class="btn-edit">
+            <i class="fas fa-edit"></i> Edit
+        </a>
+        <a href="{% url 'delete_recap' entry.pk %}" class="btn-delete">
+            <i class="fas fa-trash"></i> Delete
+        </a>
+    </div>
+</div>
+
         {% empty %}
         <div class="empty-state">
             <p>Koi data nahi mila. Pehla recap add karein!</p>
@@ -32,3 +51,9 @@
         {% endfor %}
     </div>
 </div>
+
+{% endblock content %}
+{% block script %}
+
+{% endblock script %}
+

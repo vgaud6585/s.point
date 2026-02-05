@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}dashboard{% endblock title %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'fontawesome/css/all.css' %}" type="text/css" media="all" />
+<link rel="stylesheet" href="{% static 'core/css/style.css' %}" type="text/css" media="all" />
+{% endblock style %}
+{% block content %}
+<div class="link-container">
+    <a href="{% url 'study-list' %}" class="btn-study">
+        <i class="fas fa-arrow-left"></i> Go to Study Point
+    </a>
+</div>
+
+<div class="dashboard-container">
+
+	<main class="content">
+		<header>
+			<h1>Create New Entry</h1>
+		</header>
+
+		<div class="form-card">
+			<form id="recapForm" method="POST">
+				{% csrf_token %}
+
+				<div class="input-group">
+					<label>Heading</label>
+					<input type="text" name="heading" id="id_heading" required placeholder="Enter topic name...">
+				</div>
+
+				<div class="input-group">
+					<label>Description</label>
+					<textarea name="description" id="id_description" rows="4" required placeholder="Detailed notes..."></textarea>
+				</div>
+
+				<div class="input-group">
+					<label class="code-label"><i class="fas fa-code"></i> Code Snippet</label>
+					<textarea name="code_snippet" id="id_code_snippet" class="code-area" rows="8" placeholder="// Write or paste code here..."></textarea>
+				</div>
+
+				<div class="actions">
+					<button type="submit" class="btn-save">
+						<i class="fas fa-save"></i> Save to Database
+					</button>
+				</div>
+			</form>
+		</div>
+	</main>
+</div>
+    
+{% endblock content %}
+{% block script %}
+<script src="{% static 'core/js/script.js' %}" type="text/javascript" charset="utf-8"></script>
+{% endblock script %}

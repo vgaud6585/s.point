@@ -1,42 +1,41 @@
-// --- Sidebar Logic ---
-let sidebarOpen = false;
-function toggleNav() {
-    const sidebar = document.getElementById("mySidebar");
-    if (!sidebarOpen) {
-        sidebar.style.width = "250px";
-        sidebarOpen = true;
-    } else {
-        sidebar.style.width = "0";
-        sidebarOpen = false;
-    }
-}
 
-// --- Double Tap Logic ---
-const heading = document.getElementById("bookHeading");
-const desc = document.getElementById("bookDesc");
-const content = document.getElementById("bookContent");
+// --- Click Toggle Logic (Description Only) ---
+document.addEventListener("DOMContentLoaded", () => {
+    // Sabhi headings ko select karein
+    const headings = document.querySelectorAll(".book-title");
 
-heading.addEventListener("dblclick", function () {
-    if (desc.style.display === "none" || desc.style.display === "") {
-        desc.style.display = "block";
-        content.style.display = "none";
-    } else {
-        desc.style.display = "none";
-        content.style.display = "block";
-    }
+    headings.forEach(heading => {
+        heading.addEventListener("click", function () {
+            // Heading ke thik baad wala element (Description) select karein
+            const desc = this.nextElementSibling;
+
+            // Toggle Display
+            if (desc.style.display === "none" || desc.style.display === "") {
+                desc.style.display = "block";
+            } else {
+                desc.style.display = "none";
+            }
+        });
+    });
 });
 
 // --- Pagination Logic (Demo) ---
 let currentPage = 1;
-document.getElementById("nextBtn").addEventListener("click", () => {
-    currentPage++;
-    alert("Aap Page " + currentPage + " par ja rahe hain!");
-    // Yahan aap content change karne ka logic add kar sakte hain
-});
+const nextBtn = document.getElementById("nextBtn");
+const prevBtn = document.getElementById("prevBtn");
 
-document.getElementById("prevBtn").addEventListener("click", () => {
-    if (currentPage > 1) {
-        currentPage--;
-        alert("Aap Page " + currentPage + " par wapas ja rahe hain!");
-    }
-});
+if (nextBtn) {
+    nextBtn.addEventListener("click", () => {
+        currentPage++;
+        alert("Aap Page " + currentPage + " par ja rahe hain!");
+    });
+}
+
+if (prevBtn) {
+    prevBtn.addEventListener("click", () => {
+        if (currentPage > 1) {
+            currentPage--;
+            alert("Aap Page " + currentPage + " par wapas ja rahe hain!");
+        }
+    });
+}
