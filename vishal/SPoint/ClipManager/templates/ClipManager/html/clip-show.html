@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}homepage{% endblock title %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'ClipManager/css/style.css' %}" />
+<link rel="stylesheet" href="{% static 'ClipManager/css/clip-show.css' %}" />
+{% endblock style %}
+{% block content %}
+<h1><a href="{% url 'homepage' %}">Back to Home page</a></h1>
+<h1><a href="{% url 'clip_add' %}">Add New Clip</a></h1>
+    <div class="list-section">
+        <h2>Your Saved Clips</h2>
+        {% for clip in clips %}
+        <div class="clip-card">
+            <div class="clip-header">
+                <strong>{{ clip.heading }}</strong>
+                <div class="actions">
+                    <a href="{% url 'clip_edit' clip.pk %}" class="edit-link">Edit</a>
+                    <a href="{% url 'clip_delete' clip.pk %}" class="delete-link" onclick="return confirm('Delete?')">Delete</a>
+                </div>
+            </div>
+            
+            <div class="code-wrapper">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code>{{ clip.code_clip }}</code></pre>
+            </div>
+            <p style="font-size: 12px; color: #888; margin-top: 10px;">
+                Added on: {{ clip.created_at }}
+            </p>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock content %}
+{% block script %}
+<script src="{% static 'ClipManager/js/script.js' %}" type="text/javascript" charset="utf-8"></script>
+{% endblock script %}
