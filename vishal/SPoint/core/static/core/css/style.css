@@ -1,25 +1,15 @@
-/* 1. Global Reset: Taaki padding width se bahar na nikle */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+
+/* Container ko thodi space dene ke liye */
+.link-container {
+    margin: 5px 0;
+    display: inline-block;
 }
 
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
 
-/* 2. Main Container: Margins aur Padding ko 5px rakha gaya hai */
 .content {
-    flex: 1;
     padding: 5px;
     margin: 5px;
-}
-
-header h1 {
-    font-size: 1.8rem;
-    margin-bottom: 15px;
-    color: #111827;
+    
 }
 
 /* 3. Form Card: Safed box jo content hold karega */
@@ -106,12 +96,6 @@ header h1 {
 
 .btn-save i {
     margin-right: 8px;
-}
-
-/* Container ko thodi space dene ke liye */
-.link-container {
-    margin: 20px 0;
-    display: inline-block;
 }
 
 /* Base Button Styling */

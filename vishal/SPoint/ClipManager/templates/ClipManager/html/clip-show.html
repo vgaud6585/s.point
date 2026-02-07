@@ -2,14 +2,14 @@
 {% load static %}
 {% block title %}homepage{% endblock title %}
 {% block style %}
-<link rel="stylesheet" href="{% static 'ClipManager/css/style.css' %}" />
 <link rel="stylesheet" href="{% static 'ClipManager/css/clip-show.css' %}" />
 {% endblock style %}
 {% block content %}
-<h1><a href="{% url 'homepage' %}">Back to Home page</a></h1>
-<h1><a href="{% url 'clip_add' %}">Add New Clip</a></h1>
+<div class="main-header">
+    <a href="{% url 'homepage' %}" class="btn-add">Vishal Gaud</a>
+    <a href="{% url 'clip_add' %}" class="btn-add">+ New Entry</a>
+</div>
     <div class="list-section">
-        <h2>Your Saved Clips</h2>
         {% for clip in clips %}
         <div class="clip-card">
             <div class="clip-header">

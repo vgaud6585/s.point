@@ -1,16 +1,39 @@
 <!DOCTYPE html>
 {% load static %}
-
 <html>
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>{% block title %}base{% endblock title %}</title>
-		{% block style %}
 		<link rel="stylesheet" href="{% static 'style.css' %}" type="text/css" media="all" />
+		{% block style %}
 		{% endblock style %}
 	</head>
 	<body>
+		
+		{% block headside %}
+		
+		<!-- header design html -->
+		<div class="header-fixed-position"></div>
+		<header>
+		    <span class="menu-btn" onclick="toggleNav()">☰</span>
+		    <h2>Self Study Point</h2>
+		</header>
+		<!-- header design html end here -->
+	
+		<!-- sidebar design html -->
+		<div id="mySidebar" class="sidebar">
+    	<a href="javascript:void(0)" class="closebtn" onclick="toggleNav()">×</a>
+			<a href="{% url 'dashboard' %}">Create New Record</a>
+			<a href="{% url 'clip_home' %}">Clip Manager</a>
+			<a href="#">Author Bio</a>
+			<a href="#">Settings</a>
+		</div>
+		<!-- sidebar design html end here -->
+	
+		{% endblock headside %}
+		
+		<div class="content-box">
 		{% block content %}
 		
 		<div class="stage">
@@ -19,8 +42,9 @@
     <div id="shape">CLICK ME</div>
 
 		{% endblock content %}
-		{% block script %}
+		</div>
 		<script src="{% static 'script.js' %}" type="text/javascript" charset="utf-8"></script>
+		{% block script %}
 		{% endblock script %}
 		
 	</body>

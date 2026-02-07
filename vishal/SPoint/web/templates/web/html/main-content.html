@@ -1,20 +1,27 @@
 <div class="container">
-  {% if records %}
-  {% for rec in records %}
-  <div class="chapter-wrapper">
-    <h1 class="book-title">Chapter {{ rec.id }}: {{ rec.heading }}</h1>
-
-    <div class="description">
-      <strong>Description: </strong>{{ rec.description }}
+    <h1 class="main-title">My Study Recap</h1>
+    
+    <div class="recap-grid">
+        {% for recap in recaps %}
+        <div class="recap-card">
+            <div class="card-header">
+                <h2>{{ recap.heading }}</h2>
+                <span class="date">{{ recap.created_at|date:"d M, Y" }}</span>
+            </div>
+            
+            <div class="card-body">
+                <p class="description">{{ recap.description }}</p>
+                
+                {% if recap.code_snippet %}
+                <div class="code-container">
+                    <div class="code-label">Python / Code Snippet</div>
+                    <pre><code>{{ recap.code_snippet }}</code></pre>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% empty %}
+        <p>Abhi tak koi data nahi hai.</p>
+        {% endfor %}
     </div>
-
-    <div class="content-body">
-        <pre>{{ rec.code_snippet }}</pre>
-    </div>
-  </div>
-  <hr>
-  {% endfor %}
-  {% else %} 
-  <h1>No Record</h1>
-  {% endif %}
 </div>

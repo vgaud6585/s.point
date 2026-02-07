@@ -1,34 +1,34 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block title %}Edit Clip{% endblock title %} 
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'ClipManager/css/clip-edit.css' %}" />
+{% endblock style %} 
+
+{% block content %}
+<div class="back-home">
+<a href="{% url 'clip_home' %}">Back to home</a>
+</div>
 <div class="container">
-    <header class="main-header">
-        <h1>Vishal gaud</h1>
-        <a href="{% url 'dashboard' %}" class="btn-add">+ New Entry</a>
-    </header>
-
-    <div class="records-grid">
-        {% for entry in entries %}
-        <div class="recap-card">
-            <div class="card-top">
-                <span class="badge">Topic</span>
-                <span class="date">{{ entry.created_at|date:"d M, Y" }}</span>
+    <div class="form-section">
+        <h3>Edit Your Clip</h3>
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="{{ form.heading.id_for_label }}">Heading:</label>
+                {{ form.heading }}
             </div>
 
-            <h2 class="entry-title">{{ entry.heading }}</h2>
-            <p class="entry-desc">{{ entry.description }}</p>
-
-            {% if entry.code_snippet %}
-            <div class="code-box">
-                <div class="code-header">
-                    <span>CODE</span>
-                    <i class="fas fa-terminal"></i>
-                </div>
-                <pre><code>{{ entry.code_snippet }}</code></pre>
+            <div class="form-group">
+                <label for="{{ form.code_clip.id_for_label }}">Code Clip:</label>
+                {{ form.code_clip }}
             </div>
-            {% endif %}
-        </div>
-        {% empty %}
-        <div class="empty-state">
-            <p>Koi data nahi mila. Pehla recap add karein!</p>
-        </div>
-        {% endfor %}
+
+            <button type="submit" class="btn-save">Update Clip</button>
+            <a href="{% url 'clip_home' %}" class="btn-cancel">Cancel</a>
+        </form>
     </div>
 </div>
+{% endblock content %}
