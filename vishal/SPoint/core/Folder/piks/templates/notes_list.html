@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickNote & Gallery</title>
+    <style>
+        /* CSS Styling */
+        :root {
+            --primary: #4f46e5;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Design */
+        .sidebar {
+            width: 260px;
+            background: var(--card);
+            border-right: 1px solid var(--border);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+        }
+
+        .main-content {
+            margin-left: 260px;
+            flex: 1;
+            padding: 30px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 30px;
+        }
+
+        /* Forms & Inputs */
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        textarea, input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 600;
+        }
+
+        /* Notes Grid */
+        .notes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .note-card {
+            background: var(--card);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .note-date {
+            font-size: 11px;
+            color: var(--muted);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        /* Gallery Style */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .img-container {
+            aspect-ratio: 1/1;
+            overflow: hidden;
+            border-radius: 8px;
+            background: #eee;
+        }
+
+        .img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .img-container img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Pagination */
+        .pagination {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .saved-paths-list {
+            list-style: none;
+            padding: 0;
+            overflow-y: auto;
+        }
+
+        .saved-paths-list li a {
+            text-decoration: none;
+            color: var(--muted);
+            font-size: 13px;
+            display: block;
+            padding: 8px;
+            border-radius: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .saved-paths-list li a:hover {
+            background: #f1f5f9;
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .sidebar { width: 100%; height: auto; position: relative; }
+            body { flex-direction: column; }
+            .main-content { margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+
+
+
+    <div class="main-content">
+        
+        {% if error_message %}
+            <div style="background: #fee2e2; color: #b91c1c; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                {{ error_message }}
+            </div>
+        {% endif %}
+
+        {% if notes %}
+        <h2 style="margin-top: 0;">My Notes</h2>
+        <div class="notes-grid">
+            {% for note in notes %}
+            <div class="note-card">
+                <span class="note-date">{{ note.created_at|date:"d M Y, H:i" }}</span>
+                <p style="margin: 0; line-height: 1.5;">{{ note.content|linebreaks }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        <hr style="margin: 40px 0; border: 0; border-top: 1px solid var(--border);">
+        {% endif %}
+
+        {% if page_obj %}
+        <h2>Gallery: <span style="font-weight: normal; color: var(--muted); font-size: 16px;">{{ folder_path }}</span></h2>
+        <div class="gallery-grid">
+            {% for img_name in page_obj %}
+            <div class="img-container">
+                <img src="/serve_image/?p={{ folder_path }}&name={{ img_name }}" loading="lazy" alt="image">
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="pagination">
+            {% if page_obj.has_previous %}
+                <a href="?folder_path={{ folder_path }}&page={{ page_obj.previous_page_number }}" style="text-decoration:none; color: var(--primary); padding: 10px;">&laquo; Previous</a>
+            {% endif %}
+            
+            <span style="padding: 10px; font-weight: bold;">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+            {% if page_obj.has_next %}
+                <a href="?folder_path={{ folder_path }}&page={{ page_obj.next_page_number }}" style="text-decoration:none; color: var(--primary); padding: 10px;">Next &raquo;</a>
+            {% endif %}
+        </div>
+        {% endif %}
+
+    </div>
+
+    <script>
+        // Simple script to handle dynamic UI updates if needed
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("QuickNote Dashboard Loaded");
+            
+            // Auto-scroll logic for sidebar if many paths
+            const sidebar = document.querySelector('.saved-paths-list');
+            if(sidebar) {
+                sidebar.scrollTop = 0;
+            }
+        });
+    </script>
+</body>
+</html>

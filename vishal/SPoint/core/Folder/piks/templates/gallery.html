@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid p-1"> 
+    {% if error_message %}
+        <div class="alert alert-danger mx-2 mt-2">{{ error_message }}</div>
+    {% else %}
+        <div class="row g-2 m-0"> 
+            {% for img in page_obj %}
+            <div class="col-12"> 
+                <div class="card border-0 shadow-sm mb-2 overflow-hidden">
+                    <img src="{% url 'serve_image' %}?p={{ folder_path }}&rel={{ img.rel_path }}&name={{ img.name }}" 
+                         class="img-fluid"
+                         data-name="{{ img.name }}"
+                         data-subfolder="{{ img.rel_path|default:'Main Root' }}"
+                         ondblclick="showFloatingDetails(this)"
+                         style="width: 100%; height: auto; display: block; cursor: pointer;">
+                    
+                    <div class="card-footer bg-white p-2 border-top-0">
+                        <p class="m-0 text-truncate fw-bold" style="font-size: 0.85rem; color: #333;">
+                           📄 {{ img.name }}
+                        </p>
+                        <small class="text-muted" style="font-size: 0.75rem;">📁 {{ img.rel_path|default:'/' }}</small>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if page_obj.has_other_pages %}
+        <nav aria-label="Page navigation" class="my-4">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link shadow-sm" href="?folder_path={{ folder_path }}&page={{ page_obj.previous_page_number }}">Previous</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">Previous</span></li>
+                {% endif %}
+
+                <li class="page-item active">
+                    <span class="page-link shadow-sm">{{ page_obj.number }}</span>
+                </li>
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link shadow-sm" href="?folder_path={{ folder_path }}&page={{ page_obj.next_page_number }}">Next</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">Next</span></li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+
+        <div id="floatingDetailBox" class="floating-panel d-none shadow-lg">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h6 class="m-0 text-white">🔍 Image Details</h6>
+                <button type="button" class="btn-close btn-close-white" onclick="closeDetailBox()"></button>
+            </div>
+            <div class="detail-content text-start">
+                <p><strong>File Name:</strong><br><span id="dispName" class="text-info break-word"></span></p>
+                <p class="mb-0"><strong>Sub-folder:</strong><br><span id="dispFolder" class="text-warning"></span></p>
+            </div>
+        </div>
+
+        <style>
+            body { padding: 0 !important; margin: 0 !important; overflow-x: hidden; background-color: #f8f9fa; }
+            .container-fluid { max-width: 100%; }
+            
+            .floating-panel {
+                position: fixed;
+                bottom: 110px; /* Detail box uper shift kiya */
+                left: 50%;
+                transform: translateX(-50%);
+                width: 90%;
+                max-width: 360px;
+                background: rgba(33, 37, 41, 0.98);
+                color: white;
+                padding: 18px;
+                border-radius: 15px;
+                z-index: 1050;
+                border: 1px solid #444;
+                backdrop-filter: blur(8px);
+            }
+
+            .break-word { word-break: break-all; font-size: 0.85rem; line-height: 1.2; }
+            .detail-content p { margin-bottom: 12px; font-size: 0.9rem; }
+            .card { border-radius: 10px; margin-left: 5px; margin-right: 5px; }
+            .pagination .page-link { border-radius: 8px; margin: 0 5px; color: #333; border: none; }
+            .pagination .active .page-link { background-color: #007bff; color: white; }
+        </style>
+    {% endif %}
+</div>
+{% endblock %}

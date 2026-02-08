@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}homepage{% endblock title %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'core/css/detail.css' %}" type="text/css" media="all" />
+{% endblock style %}
+{% block content %}
+<div class="detail-container">
+    <div class="content-card">
+        <div class="card-header">
+            <div class="action-bar">
+                <a href="{% url 'edit_recap' item.pk %}" class="btn-action edit-btn">Edit</a>
+                <button type="button" class="btn-action delete-btn" onclick="toggleModal(true)">Delete</button>
+            </div>
+            <h1 class="main-title">{{ item.heading }}</h1>
+        </div>
+
+        <div class="card-body">
+            <section class="info-section">
+                <h2 class="section-label">Description</h2>
+                <div class="description-text">{{ item.description }}</div>
+            </section>
+
+            <section class="info-section">
+                <h2 class="section-label">Code Snippet</h2>
+                <div class="code-wrapper">
+                    <pre><code>{{ item.code_snippet }}</code></pre>
+                </div>
+            </section>
+        </div>
+
+        <footer class="card-footer">
+            <a href="{% url 'dashboard' %}" class="back-link">
+                <span class="arrow">←</span> Back to List
+            </a>
+            <div class="meta-info">
+                <span>ID: #{{ item.id }}</span>
+                <span class="separator">|</span>
+                <span>{{ item.created_at|date:"P" }}</span>
+            </div>
+        </footer>
+    </div>
+</div>
+
+<div id="customModal" class="modal-overlay">
+    <div class="modal-box">
+        <div class="modal-icon">🗑️</div>
+        <h3 class="modal-title">Are you sure?</h3>
+        <p class="modal-text">Ye record delete hone ke baad wapas nahi mil sakega. Kya aap jari rakhna chahte hain?</p>
+        
+        <div class="modal-actions">
+            <button class="modal-btn cancel-btn" onclick="toggleModal(false)">Cancel</button>
+            <form action="{% url 'delete_recap' item.pk %}" method="POST" style="flex: 1;">
+                {% csrf_token %}
+                <button type="submit" class="modal-btn confirm-btn">Delete Now</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block script %}
+<script src="{% static 'core/js/detail.js' %}" type="text/javascript" charset="utf-8"></script>
+{% endblock script %}

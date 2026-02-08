@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}homepage{% endblock title %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'core/css/search.css' %}" type="text/css" media="all" />
+{% endblock style %}
+{% block content %}
+<div class="search-container">
+    <h1 class="search-title">Advanced Search</h1>
+
+    <form method="GET" class="search-card">
+        <div class="search-grid">
+            <div class="input-group">
+                <label class="input-label">Search Category</label>
+                <div class="select-wrapper">
+                    <select name="search_type" class="custom-select">
+                        <option value="all" {% if search_type == 'all' %}selected{% endif %}>🔍 All Fields</option>
+                        <option value="id" {% if search_type == 'id' %}selected{% endif %}>🆔 Record ID</option>
+                        <option value="heading" {% if search_type == 'heading' %}selected{% endif %}>📝 Heading</option>
+                        <option value="description" {% if search_type == 'description' %}selected{% endif %}>📄 Description</option>
+                        <option value="code" {% if search_type == 'code' %}selected{% endif %}>💻 Code Snippet</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="input-group flex-grow">
+                <label class="input-label">Keyword</label>
+                <input type="text" name="q" value="{{ query }}" placeholder="Type to search..." class="custom-input">
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="primary-btn">Search Now</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="results-section">
+        {% if query %}
+            <div class="results-header">
+                <p>Found <strong>{{ results|length }}</strong> results in <strong>{{ search_type }}</strong></p>
+                <a href="{% url 'study_search' %}" class="clear-link">Clear All</a>
+            </div>
+
+            <div class="results-list">
+                {% for item in results %}
+                    <div class="result-item">
+                        <div class="item-info">
+                            <span class="item-id">#{{ item.id }}</span>
+                            <h3 class="item-heading">{{ item.heading }}</h3>
+                            <span class="item-date">{{ item.created_at|date:"d M Y" }}</span>
+                        </div>
+                        <a href="{% url 'detail' item.pk %}" class="detail-btn">View Details</a>
+                    </div>
+                {% empty %}
+                    <div class="empty-state">
+                        <div class="icon">📁</div>
+                        <p>No records found for this filter.</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="welcome-state">
+                <div class="floating-icon">🔎</div>
+                <p>Select a category and start exploring your study recaps.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock content %}
+{% block script %}
+{% endblock script %}

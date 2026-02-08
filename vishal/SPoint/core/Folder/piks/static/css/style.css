@@ -1,0 +1,96 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: #f8f9fa;
+    font-family: sans-serif;
+}
+
+/* OVERLAY SIDEBAR (Upar se aane wala) */
+#sidebar {
+    position: fixed;
+    top: -100%; /* Shuruat mein screen ke bahar (upar) */
+    left: 0;
+    width: 100%; /* Full width mobile ke liye */
+    height: auto;
+    max-height: 80vh;
+    background: #1a1d20;
+    color: white;
+    transition: 0.4s ease-in-out;
+    z-index: 2000;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+    border-radius: 0 0 20px 20px;
+}
+
+#sidebar.open {
+    top: 0; /* Click karne par niche aayega */
+}
+
+/* Sidebar Links */
+.nav-link {
+    color: #ddd;
+    font-weight: 500;
+}
+.nav-link:hover {
+    color: #ffc107;
+}
+
+/* HEADER FIX */
+.header {
+    height: 60px;
+    background: white;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* FLOATING NOTE BOX */
+#floatingNoteBox {
+    display: none;
+    position: fixed;
+    top: 150px;
+    left: 5%;
+    width: 90%;
+    background: white;
+    z-index: 1500;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    border-top: 4px solid #ffc107;
+}
+
+/* MODAL FIX */
+#imageModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 3000;
+    justify-content: center;
+    align-items: center;
+}
+#fullImage {
+    max-width: 95%;
+    max-height: 90%;
+    object-fit: contain;
+}
+
+/* Responsive Adjustments */
+@media (min-width: 768px) {
+    #sidebar {
+        width: 300px;
+        height: 100vh;
+        top: 0;
+        left: -300px;
+        border-radius: 0;
+    }
+    #sidebar.open {
+        left: 0;
+        top: 0;
+    }
+}
